@@ -1,19 +1,28 @@
 <template>
-  <h1>{{ msg }}</h1>
-  <button @click="count++">count is: {{ count }}</button>
-  <p>Edit <code>components/HelloWorld.vue</code> to test hot module replacement.</p>
+  <article class="markdown-body" v-html="html"></article>
 </template>
 
-<script>
-export default {
-  name: 'HelloWorld',
+<script lang="ts">
+import { computed, defineComponent, ref } from "vue";
+
+export default defineComponent({
+  name: "HelloWorld",
   props: {
-    msg: String
+    path: String,
   },
-  data() {
-    return {
-      count: 0
-    }
-  }
-}
+  setup(props, ctx) {
+    const content = ref('')
+    console.log(props.path)
+    import(props.path).then((res) => {
+      content.value = res.default
+    }).catch((err) => {
+      console.log(err)
+    })
+    const html = computed(() => {
+      return Prism.highlight(content, Prism.languages.html, 'html')
+    })
+    console.log(content)
+    return {html}
+  },
+});
 </script>

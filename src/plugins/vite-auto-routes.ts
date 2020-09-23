@@ -1,5 +1,5 @@
-const virtual = require('@rollup/plugin-virtual')
-import parsePagesDirectory from  '../utils/directory-parser'
+import virtual from '@rollup/plugin-virtual'
+import parsePagesDirectory from './../utils/directory-parser'
 
 function makeModuleContent({ pagesDir }) {
   const { routes } = parsePagesDirectory(pagesDir)

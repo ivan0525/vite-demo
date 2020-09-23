@@ -18,7 +18,7 @@ function parsePagesDirectory(
   const directories = siblings.filter((f) => f.isDirectory()).map((d) => d.name)
 
   for (const name of files) {
-    const f = { name: name.split('.')[0], importPath: path.join(dir, name) }
+    const f = { name: name.split('.')[0], importPath: path.posix.join(dir, name) }
 
     const routeOptions = []
     // Route name

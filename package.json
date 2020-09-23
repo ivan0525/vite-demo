@@ -6,12 +6,15 @@
     "build": "vite build"
   },
   "dependencies": {
+    "github-markdown-css": "^4.0.0",
     "marked": "^1.1.1",
+    "prismjs": "^1.21.0",
     "vue": "^3.0.0-rc.1",
     "vue-router": "^4.0.0-beta.11"
   },
   "devDependencies": {
     "@rollup/plugin-virtual": "^2.0.3",
+    "@types/marked": "^1.1.0",
     "@vue/compiler-sfc": "^3.0.0-rc.1",
     "vite": "^1.0.0-rc.1"
   }

@@ -1,5 +1,7 @@
 import fs from 'fs'
-function parsePagesDirectory () {
+import path from 'path'
+import marked from 'marked'
+function parsePagesDirectory() {
   const files = fs
     .readdirSync('./src/pages')
     .map((f) => ({ name: f.split('.')[0], importPath: `/src/pages/${f}` }))
@@ -13,9 +15,14 @@ function parsePagesDirectory () {
         component: () => import('${f.importPath}'),
       }
       `
-  )
+  );
 
   return { imports, routes }
+}
+
+const markdownToJs = (s) => {
+  const content = JSON.stringify(marked(s))
+  return `export default ${content}`
 }
 
 export default () => {
@@ -31,6 +38,10 @@ export default () => {
         if (ctx.path.startsWith('/@modules/vue-auto-routes')) {
           ctx.type = 'js'
           ctx.body = moduleContent
+        } else if (ctx.path.endsWith('.md')) {
+          ctx.type = 'js'
+          const filepath = path.posix.join(process.cwd(), ctx.path)
+          ctx.body = markdownToJs(fs.readFileSync(filepath)&&fs.readFileSync(filepath).toString())
         } else {
           await next()
         }
